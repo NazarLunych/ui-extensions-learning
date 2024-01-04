@@ -1,0 +1,1 @@
+function t(){const n=document.querySelectorAll(".js-banner-video");n.length&&n.forEach(e=>{e.pause(),new IntersectionObserver(r=>{r[0].intersectionRatio<=0||e.play()},{threshold:.5}).observe(e)})}t();
