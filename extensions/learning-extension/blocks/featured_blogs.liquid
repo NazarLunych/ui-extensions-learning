@@ -1,0 +1,119 @@
+{% assign default_image = block.settings.default_image %}
+
+
+<div class="blog-posts swiper js-posts-swiper">
+  <div class="blog-posts__content swiper-wrapper">
+    {% for article in block.settings.blog.articles limit: 3 -%}
+      {% assign image = article.image | default: default_image %}
+      {% assign author_avatar = article.metafields.custom.author_avatar %}
+      {% assign tags = article.tags %}
+      {% assign excerpt_or_content = article.excerpt_or_content %}
+      {% assign url = article.url %}
+      {% assign comments_count = article.comments_count %}
+
+      <div class="blog-posts__post swiper-slide">
+        <a class="blog-posts__img-wrapper" href="{{ url }}">
+          <div class="blog-posts__post-img">
+            {% if image != blank or default_image != blank %}
+              <picture>
+                <source
+                    media="(max-width: 375px)"
+                    srcset="{{ image | image_url: width: 345, height: 207 }} 1x, {{ image | image_url: width: 690, height: 414 }} 2x">
+
+                <source
+                    media="(max-width: 500px)"
+                    srcset="{{ image | image_url: width: 470, height: 282 }} 1x, {{ image | image_url: width: 940, height: 564 }} 2x">
+
+                <img
+                    src="{{- image | image_url: width: 539, height: 268 -}}"
+                    alt="{{ image.alt }}"
+                >
+              </picture>
+            {% else %}
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+        </a>
+
+        <div class="blog-posts__post-content-container">
+          <div class="blog-posts__about-post">
+            {% if tags != blank %}
+              <div class="blog-posts__post-tag">{{ tags | first }}</div>
+            {% endif %}
+
+            <div class="blog-posts__post-info-wrapper">
+              <img src="{{ 'clock.svg' | asset_url }}" width="16" height="16" alt="Published at icon">
+              <span class="blog-posts__post-info">{{ article.published_at | date: '%B %d %Y' }}</span>
+            </div>
+
+            <div class="blog-posts__post-info-wrapper">
+              <img src="{{ 'message.svg' | asset_url }}" width="16" height="16" alt="Comments icon">
+              <span class="blog-posts__post-info">
+                    {{ comments_count }}
+
+                    <span class="blog-posts__comments-word">
+                      {% if comments_count == 1 %}
+                        comment
+                      {% else -%}
+                        comments
+                      {% endif %}
+                    </span>
+                  </span>
+            </div>
+          </div>
+
+          <h2 class="blog-posts__post-title">{{ article.title }}</h2>
+
+          {% if excerpt_or_content != blank %}
+            <div class="blog-posts__excerpt-or-content">{{ excerpt_or_content }}</div>
+          {% endif %}
+
+          <div class="blog-posts__post-footer-info">
+            <a href="{{ url }}" class="blog-posts__post-link">Read More</a>
+
+            <div class="blog-posts__post-info">
+              <div class="blog-posts__author-avatar">
+                {% if author_avatar != blank %}
+                  <img src="{{ author_avatar | image_url: width: 32, height: 32 }}"
+                       srcset="{{ author_avatar | image_url: width: 32, height: 32 }} 1x, {{ author_avatar | image_url: width: 64, height: 64 }} 2x"
+                       alt="{{ author_avatar.alt }}">
+                {% else %}
+                  {{ "image" | placeholder_svg_tag }}
+                {% endif %}
+              </div>
+
+              <span>By {{ article.author }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="swiper-pagination"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="{{ "featured_blogs.css" | asset_url }}">
+
+{% schema %}
+{
+  "name": "Featured blogs",
+  "target": "section",
+  "javascript": "featured_blogs.js",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "image_picker",
+      "id": "default_image",
+      "label": "Default Image"
+    }
+  ]
+}
+{% endschema %}
