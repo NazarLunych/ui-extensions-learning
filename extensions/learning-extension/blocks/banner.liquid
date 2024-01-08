@@ -63,9 +63,9 @@
             srcset="{{ image_mobile | image_url: width: 668, height: min_mobile_height }} 1x, {{ image_mobile | image_url: width: 1336, height: double_min_mobile_height }} 2x"
             media="(max-width: 768px)">
 
-        <image class="banner-image"
-               src="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }}"
-               alt="{{ image_desktop.alt }}"></image>
+        <img class="banner-image"
+             src="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }}"
+             alt="{{ image_desktop.alt }}"/>
       </picture>
     {% else %}
       <div class="banner-placeholder">
