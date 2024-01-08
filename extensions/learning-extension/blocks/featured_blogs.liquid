@@ -28,6 +28,7 @@
                   <img
                       src="{{- image | image_url: width: 539, height: 268 -}}"
                       alt="{{ image.alt }}"
+                      loading="lazy"
                   >
                 </picture>
               {% else %}
@@ -43,7 +44,7 @@
               {% endif %}
 
               <div class="blog-posts__post-info-wrapper">
-                <img src="{{ 'clock.svg' | asset_url }}" width="16" height="16" alt="Published at icon">
+                <img src="{{ 'clock.svg' | asset_url }}" width="16" height="16" alt="Published at icon" loading="eager">
                 <span class="blog-posts__post-info">{{ article.published_at | date: '%B %d %Y' }}</span>
               </div>
 
@@ -77,7 +78,7 @@
                   {% if author_avatar != blank %}
                     <img src="{{ author_avatar | image_url: width: 32, height: 32 }}"
                          srcset="{{ author_avatar | image_url: width: 32, height: 32 }} 1x, {{ author_avatar | image_url: width: 64, height: 64 }} 2x"
-                         alt="{{ author_avatar.alt }}">
+                         alt="{{ author_avatar.alt }}" loading="eager">
                   {% else %}
                     {{ "image" | placeholder_svg_tag }}
                   {% endif %}
