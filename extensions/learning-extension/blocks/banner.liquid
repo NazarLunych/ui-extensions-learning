@@ -17,78 +17,78 @@
 {% assign button_text_hover_color = block.settings.button_text_hover_color %}
 
 {% capture banner_styles %}
-    --desktop-min-height: {{ min_desktop_height }}px;
-    --mobile-min-height: {{ min_mobile_height }}px;
-    --banner-overlay: {{ banner_overlay }};
-    --text-color: {{ text_color }};
-    --button-text-color: {{ button_text_color }};
-    --button-background-color: {{ button_background_color }};
-    --button-background-hover-color: {{ button_background_hover_color }};
-    --button-text-hover-color: {{ button_text_hover_color }}
+  --desktop-min-height: {{ min_desktop_height }}px;
+  --mobile-min-height: {{ min_mobile_height }}px;
+  --banner-overlay: {{ banner_overlay }};
+  --text-color: {{ text_color }};
+  --button-text-color: {{ button_text_color }};
+  --button-background-color: {{ button_background_color }};
+  --button-background-hover-color: {{ button_background_hover_color }};
+  --button-text-hover-color: {{ button_text_hover_color }}
 {% endcapture %}
 
 {% if heading != blank or text != blank %}
-    <div class="banner-container" style="{{ banner_styles }}">
-        {% if media_type == "html_video" and video_desktop != blank %}
-            <video class="banner-video {% if video_mobile != blank %}banner-video--desktop-display{% endif %} js-banner-video"
-                   autoplay loop muted>
-                {% for video_source in video_desktop.sources %}
-                    <source
-                            src="{{ video_source.url }}"
-                            type="{{ video_source.mime_type }}"
-                    />
-                {% endfor %}
-                Your browser doesn't support HTML5 video tag.
-            </video>
+  <div class="banner-container" style="{{ banner_styles }}">
+    {% if media_type == "html_video" and video_desktop != blank %}
+      <video class="banner-video {% if video_mobile != blank %}banner-video--desktop-display{% endif %} js-banner-video"
+             autoplay loop muted>
+        {% for video_source in video_desktop.sources %}
+          <source
+              src="{{ video_source.url }}"
+              type="{{ video_source.mime_type }}"
+          />
+        {% endfor %}
+        Your browser doesn't support HTML5 video tag.
+      </video>
 
-            <video class="banner-video banner-video--mobile-display js-banner-video" autoplay loop
-                   muted>{% for video_source in video_mobile.sources %}
-                    <source
-                            src="{{ video_source.url }}"
-                            type="{{ video_source.mime_type }}"
-                    />
-                {% endfor %}
-                Your browser doesn't support HTML5 video tag.
-            </video>
-        {% elsif media_type != "html_video" and image_desktop != blank %}
-            {% assign double_min_desktop_height = min_desktop_height | times: 2 %}
-            {% assign double_min_mobile_height = min_mobile_height | times: 2 %}
+      <video class="banner-video banner-video--mobile-display js-banner-video" autoplay loop
+             muted>{% for video_source in video_mobile.sources %}
+          <source
+              src="{{ video_source.url }}"
+              type="{{ video_source.mime_type }}"
+          />
+        {% endfor %}
+        Your browser doesn't support HTML5 video tag.
+      </video>
+    {% elsif media_type != "html_video" and image_desktop != blank %}
+      {% assign double_min_desktop_height = min_desktop_height | times: 2 %}
+      {% assign double_min_mobile_height = min_mobile_height | times: 2 %}
 
-            <picture>
-                <source
-                        srcset="{{ image_mobile | image_url: width: 345, height: min_mobile_height }} 1x, {{ image_mobile | image_url: width: 690, height: double_min_mobile_height }} 2x"
-                        media="(max-width: 375px)">
+      <picture>
+        <source
+            srcset="{{ image_mobile | image_url: width: 345, height: min_mobile_height }} 1x, {{ image_mobile | image_url: width: 690, height: double_min_mobile_height }} 2x"
+            media="(max-width: 375px)">
 
-                <source
-                        srcset="{{ image_mobile | image_url: width: 668, height: min_mobile_height }} 1x, {{ image_mobile | image_url: width: 1336, height: double_min_mobile_height }} 2x"
-                        media="(max-width: 768px)">
+        <source
+            srcset="{{ image_mobile | image_url: width: 668, height: min_mobile_height }} 1x, {{ image_mobile | image_url: width: 1336, height: double_min_mobile_height }} 2x"
+            media="(max-width: 768px)">
 
-                <image class="banner-image"
-                       src="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }}"
-                       alt="{{ image_desktop.alt }}"></image>
-            </picture>
-        {% else %}
-            <div class="banner-placeholder">
-                {{ "lifestyle-2" | placeholder_svg_tag }}
-            </div>
+        <image class="banner-image"
+               src="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }}"
+               alt="{{ image_desktop.alt }}"></image>
+      </picture>
+    {% else %}
+      <div class="banner-placeholder">
+        {{ "lifestyle-2" | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+
+    <div class="banner-content">
+      <div class="banner-content__container">
+        {% if heading != blank %}
+          <h4 class="banner-heading">{{ heading }}</h4>
         {% endif %}
 
-        <div class="banner-content">
-            <div class="banner-content__container">
-                {% if heading != blank %}
-                    <h4 class="banner-heading">{{ heading }}</h4>
-                {% endif %}
+        {% if text != blank %}
+          <div class="banner-text">{{ text }}</div>
+        {% endif %}
 
-                {% if text != blank %}
-                    <div class="banner-text">{{ text }}</div>
-                {% endif %}
-
-                {% if button_link != blank and button_label != blank %}
-                    <a href="{{ button_link }}" class="banner-button">{{ button_label }}</a>
-                {% endif %}
-            </div>
-        </div>
+        {% if button_link != blank and button_label != blank %}
+          <a href="{{ button_link }}" class="banner-button">{{ button_label }}</a>
+        {% endif %}
+      </div>
     </div>
+  </div>
 {% endif %}
 
 <link rel="stylesheet" href="{{ "banner.css" | asset_url }}">
@@ -98,6 +98,12 @@
   "name": "Banner",
   "target": "section",
   "javascript": "banner.js",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
   "settings": [
     {
       "type": "select",
