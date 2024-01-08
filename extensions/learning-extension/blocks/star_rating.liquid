@@ -8,14 +8,11 @@
   {{ 'ratings.home.recommendationText' | t }}
 {% endif %}
 
-<script>
-  console.log("Test");
-</script>
-
 {% schema %}
 {
     "name": "Star Rating",
     "target": "section",
+    "javascript": "star_rating.js",
     "settings": [
         {
             "type": "product",
