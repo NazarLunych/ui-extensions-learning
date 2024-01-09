@@ -29,6 +29,8 @@
                       src="{{- image | image_url: width: 539, height: 268 -}}"
                       alt="{{ image.alt }}"
                       loading="lazy"
+                      width="549"
+                      height="268"
                   >
                 </picture>
               {% else %}
@@ -78,7 +80,7 @@
                   {% if author_avatar != blank %}
                     <img src="{{ author_avatar | image_url: width: 32, height: 32 }}"
                          srcset="{{ author_avatar | image_url: width: 32, height: 32 }} 1x, {{ author_avatar | image_url: width: 64, height: 64 }} 2x"
-                         alt="{{ author_avatar.alt }}" loading="eager">
+                         alt="{{ author_avatar.alt }}" loading="eager" width="32" height="32">
                   {% else %}
                     {{ "image" | placeholder_svg_tag }}
                   {% endif %}
@@ -96,7 +98,7 @@
   </div>
 {% endif %}
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="{{ "featured_blogs.css" | asset_url }}">

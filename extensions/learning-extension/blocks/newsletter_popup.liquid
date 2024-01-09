@@ -19,12 +19,12 @@
       data-cookie-time="{{ cookie_time }}">
     <div class="newsletter-popup__content">
       <button class="newsletter-popup__close-btn js-newsletter-popup-close">
-        <img src="{{ "icon-close.svg" | asset_url }}" alt="Close popup button" loading="eager"/>
+        <img src="{{ "icon-close.svg" | asset_url }}" alt="Close popup button" loading="eager" width="24" height="24"/>
       </button>
 
       {% if errors %}
         <h3 class="newsletter-popup__form-result">
-          <img src="{{ "icon-error.svg" | asset_url }}" alt="Error icon" loading="eager"/>
+          <img src="{{ "icon-error.svg" | asset_url }}" alt="Error icon" loading="eager" width="24" height="24"/>
           There was an error with your submission. Please try again.
         </h3>
       {% endif %}
@@ -52,7 +52,7 @@
                   <img class="newsletter-popup__img"
                        srcset="{{ img_desktop | image_url: width: 504, height: 504 }} 1x, {{ img_desktop | image_url: width: 1008, height: 1008 }} 2x"
                        src="{{ img_desktop | image_url: width: 504, height: 504 }}"
-                       alt="{{ img_desktop.alt }}" loading="eager">
+                       alt="{{ img_desktop.alt }}" loading="eager" width="504" height="504">
                 </picture>
               {% else %}
                 {{ "image" | placeholder_svg_tag }}
