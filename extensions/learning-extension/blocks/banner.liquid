@@ -1,7 +1,5 @@
-{% liquid %}
-{% assign image_desktop = block.settings.image_desktop %}
-{% endliquid %}
-
+{% liquid
+  assign image_desktop = block.settings.image_desktop %}
 {% assign image_mobile = block.settings.image_mobile | default: image_desktop %}
 {% assign heading = block.settings.heading %}
 {% assign text = block.settings.text %}
@@ -70,6 +68,7 @@
              srcset="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }} 1x, {{ image_desktop | image_url: width: 3296, height: double_min_desktop_height }} 2x"
              src="{{ image_desktop | image_url: width: 1648, height: min_desktop_height }}"
              alt="{{ image_desktop.alt }}"
+             loading="lazy"
              width="1648"
              height="200"
         />
